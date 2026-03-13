@@ -1,0 +1,398 @@
+# =============================================================================
+# OmniFold Publication Metadata — ATLAS Z+jets 24-Dimensional Measurement
+# =============================================================================
+# This file accompanies the nominal OmniFold weight file (multifold.h5) and
+# fills the documentation gaps identified in gap_analysis.md.
+# Schema version tracks format evolution for forward compatibility.
+
+schema_version: "1.0"
+
+# ---------------------------------------------------------------------------
+# Analysis identification
+# ---------------------------------------------------------------------------
+analysis:
+  name: "ATLAS Z+jets 24-Dimensional Differential Cross Section"
+  short_name: "ATLAS-Zjets-OmniFold-2024"
+  description: >
+    Simultaneous unbinned differential cross-section measurement of twenty-four
+    Z+jets kinematic observables using the OmniFold machine-learning unfolding
+    method. Results are particle-level event weights enabling flexible re-use
+    with arbitrary binning choices.
+  experiment: "ATLAS"
+  collaboration: "ATLAS Collaboration"
+  reference:
+    arxiv: "2405.20041"
+    cern_id: "CERN-EP-2024-132"
+    inspire_id: "ins2791852"
+    hepdata: "https://www.hepdata.net/record/ins2791852"
+  contact:
+    - "tanvi.wamorkar@cern.ch"
+    - "nachman@stanford.edu"
+
+# ---------------------------------------------------------------------------
+# Data provenance
+# ---------------------------------------------------------------------------
+provenance:
+  collision_energy: "13 TeV"
+  integrated_luminosity: "139 fb^{-1}"
+  data_type: "pseudodata"
+  data_description: >
+    Pseudo-data: a validation MC sample with truth- and reco-level quantities
+    that has been reweighted to mimic real data. Not actual ATLAS collision data.
+
+  generator_nominal:
+    name: "MadGraph5_aMC@NLO"
+    short_name: "MG5"
+    description: "Nominal Z+jets simulation"
+
+  detector_simulation: "ATLAS full simulation (Geant4)"
+
+  omnifold_config:
+    method: "OmniFold (MultiFold variant)"
+    library: "https://github.com/hep-lbdl/OmniFold"
+    description: >
+      Iterative machine-learning unfolding using neural network classifiers
+      to reweight simulated particle-level events to match detector-level data.
+
+# ---------------------------------------------------------------------------
+# Fiducial region and event selection
+# ---------------------------------------------------------------------------
+fiducial_region:
+  description: >
+    Events are selected with a dimuon system transverse momentum exceeding
+    200 GeV. Muons are required to fall within |eta| < 2.4. Two charged-particle
+    jets are required.
+  cuts:
+    - variable: "pT_ll"
+      operator: ">"
+      value: 200.0
+      unit: "GeV"
+      description: "Dimuon transverse momentum"
+    - variable: "eta_l1"
+      operator: "abs <"
+      value: 2.4
+      description: "Leading muon pseudorapidity"
+    - variable: "eta_l2"
+      operator: "abs <"
+      value: 2.4
+      description: "Subleading muon pseudorapidity"
+
+  jet_definition:
+    algorithm: "anti-kt"
+    radius: 0.4
+    type: "charged-particle jets (track jets)"
+    min_constituents: 1
+
+# ---------------------------------------------------------------------------
+# Observable definitions
+# ---------------------------------------------------------------------------
+# Each observable maps a column name to its physical meaning, unit, and range.
+observables:
+  # -- Lepton kinematics (6) --
+  - name: "pT_l1"
+    description: "Transverse momentum of the leading muon"
+    unit: "GeV"
+    range_min: 25.0
+    range_max: null
+
+  - name: "pT_l2"
+    description: "Transverse momentum of the subleading muon"
+    unit: "GeV"
+    range_min: 25.0
+    range_max: null
+
+  - name: "eta_l1"
+    description: "Pseudorapidity of the leading muon"
+    unit: ""
+    range_min: -2.4
+    range_max: 2.4
+
+  - name: "eta_l2"
+    description: "Pseudorapidity of the subleading muon"
+    unit: ""
+    range_min: -2.4
+    range_max: 2.4
+
+  - name: "phi_l1"
+    description: "Azimuthal angle of the leading muon"
+    unit: "rad"
+    range_min: -3.14159
+    range_max: 3.14159
+
+  - name: "phi_l2"
+    description: "Azimuthal angle of the subleading muon"
+    unit: "rad"
+    range_min: -3.14159
+    range_max: 3.14159
+
+  # -- Dilepton system (2) --
+  - name: "pT_ll"
+    description: "Transverse momentum of the dimuon system"
+    unit: "GeV"
+    range_min: 200.0
+    range_max: null
+
+  - name: "y_ll"
+    description: "Rapidity of the dimuon system"
+    unit: ""
+    range_min: -2.4
+    range_max: 2.4
+
+  # -- Leading jet (8) --
+  - name: "pT_trackj1"
+    description: "Transverse momentum of the leading charged-particle jet"
+    unit: "GeV"
+    range_min: 0.0
+    range_max: null
+
+  - name: "y_trackj1"
+    description: "Rapidity of the leading charged-particle jet"
+    unit: ""
+    range_min: -2.5
+    range_max: 2.5
+
+  - name: "phi_trackj1"
+    description: "Azimuthal angle of the leading charged-particle jet"
+    unit: "rad"
+    range_min: -3.14159
+    range_max: 3.14159
+
+  - name: "m_trackj1"
+    description: "Mass of the leading charged-particle jet"
+    unit: "GeV"
+    range_min: null
+    range_max: null
+
+  - name: "tau1_trackj1"
+    description: "1-subjettiness of the leading jet"
+    unit: ""
+    range_min: 0.0
+    range_max: 1.0
+
+  - name: "tau2_trackj1"
+    description: "2-subjettiness of the leading jet"
+    unit: ""
+    range_min: 0.0
+    range_max: 1.0
+
+  - name: "tau3_trackj1"
+    description: "3-subjettiness of the leading jet"
+    unit: ""
+    range_min: 0.0
+    range_max: 1.0
+
+  - name: "Ntracks_trackj1"
+    description: "Number of charged-particle constituents in the leading jet"
+    unit: ""
+    range_min: 1
+    range_max: null
+
+  # -- Subleading jet (8) --
+  - name: "pT_trackj2"
+    description: "Transverse momentum of the subleading charged-particle jet"
+    unit: "GeV"
+    range_min: 0.0
+    range_max: null
+
+  - name: "y_trackj2"
+    description: "Rapidity of the subleading charged-particle jet"
+    unit: ""
+    range_min: -2.5
+    range_max: 2.5
+
+  - name: "phi_trackj2"
+    description: "Azimuthal angle of the subleading charged-particle jet"
+    unit: "rad"
+    range_min: -3.14159
+    range_max: 3.14159
+
+  - name: "m_trackj2"
+    description: "Mass of the subleading charged-particle jet"
+    unit: "GeV"
+    range_min: null
+    range_max: null
+
+  - name: "tau1_trackj2"
+    description: "1-subjettiness of the subleading jet"
+    unit: ""
+    range_min: 0.0
+    range_max: 1.0
+
+  - name: "tau2_trackj2"
+    description: "2-subjettiness of the subleading jet"
+    unit: ""
+    range_min: 0.0
+    range_max: 1.0
+
+  - name: "tau3_trackj2"
+    description: "3-subjettiness of the subleading jet"
+    unit: ""
+    range_min: 0.0
+    range_max: 1.0
+
+  - name: "Ntracks_trackj2"
+    description: "Number of charged-particle constituents in the subleading jet"
+    unit: ""
+    range_min: 1
+    range_max: null
+
+# ---------------------------------------------------------------------------
+# Weight column documentation
+# ---------------------------------------------------------------------------
+weight_columns:
+
+  mc_weight:
+    column: "weight_mc"
+    description: >
+      Original Monte Carlo event weight from the generator. Reflects the
+      generator-level cross section and event selection efficiency.
+
+  nominal:
+    column: "weights_nominal"
+    description: >
+      Nominal OmniFold result. Per-event weight that, when used to reweight
+      the particle-level MC sample, reproduces the unfolded measurement.
+      Already incorporates weight_mc — do NOT multiply by weight_mc again.
+
+  ensemble:
+    columns: "weights_ensemble_{0..99}"
+    count: 100
+    description: >
+      100 ensemble replicas of the OmniFold training. Each replica corresponds
+      to an independent OmniFold run with different random initialization.
+      Use the spread across replicas to estimate the statistical uncertainty
+      of the unfolding procedure itself.
+    uncertainty_procedure: >
+      For each bin of a histogram, compute the standard deviation of bin
+      contents across all 100 ensemble replicas. This gives the OmniFold
+      statistical (methodological) uncertainty.
+
+  data_driven:
+    columns: ["weights_dd", "target_dd"]
+    description: >
+      Data-driven weights and target values. weights_dd represents the
+      OmniFold result using data-driven background estimates; target_dd
+      is the corresponding target.
+
+  bootstrap_mc:
+    columns: "weights_bootstrap_mc_{0..24}"
+    count: 25
+    description: >
+      Bootstrap replicas of the MC sample. Capture the statistical
+      uncertainty from the finite MC sample size.
+
+  bootstrap_data:
+    columns: "weights_bootstrap_data_{0..24}"
+    count: 25
+    description: >
+      Bootstrap replicas of the data sample. Capture the statistical
+      uncertainty from the finite data sample size.
+
+  detector_systematics:
+    description: "Detector-related systematic uncertainties"
+    variations:
+      - column: "weights_pileup"
+        description: "Pileup reweighting systematic"
+      - column: "weights_muEffReco"
+        description: "Muon reconstruction efficiency systematic"
+      - column: "weights_muEffIso"
+        description: "Muon isolation efficiency systematic"
+      - column: "weights_muEffTrack"
+        description: "Muon tracking efficiency systematic"
+      - column: "weights_muEffTrig"
+        description: "Muon trigger efficiency systematic"
+      - column: "weights_muCalID"
+        description: "Muon ID calibration systematic"
+      - column: "weights_muCalMS"
+        description: "Muon MS calibration systematic"
+      - column: "weights_muCalResBias"
+        description: "Muon calibration residual bias systematic"
+      - column: "weights_muCalScale"
+        description: "Muon calibration scale systematic"
+      - column: "weights_trackEffMain"
+        description: "Main tracking efficiency systematic"
+      - column: "weights_trackEffJet"
+        description: "In-jet tracking efficiency systematic"
+      - column: "weights_trackFake"
+        description: "Fake track rate systematic"
+      - column: "weights_trackPtScale"
+        description: "Track pT scale systematic"
+
+  theory_systematics:
+    description: "Theory modelling systematic uncertainties"
+    variations:
+      - column: "weights_theoryPSjet"
+        description: "Parton shower jet modelling systematic"
+      - column: "weights_theoryPSsoft"
+        description: "Parton shower soft radiation systematic"
+      - column: "weights_theoryMPI"
+        description: "Multi-parton interaction systematic"
+      - column: "weights_theoryPSscale"
+        description: "Parton shower scale systematic"
+      - column: "weights_theoryAlphaS"
+        description: "Strong coupling constant (alpha_s) systematic"
+      - column: "weights_theoryQCD"
+        description: "QCD scale variation systematic"
+      - column: "weights_theoryPDF"
+        description: "Parton distribution function systematic"
+
+  background_systematics:
+    - column: "weights_topBackground"
+      description: "Top-quark background normalization systematic"
+
+  luminosity:
+    column: "weights_lumi"
+    description: "Luminosity systematic uncertainty"
+
+# ---------------------------------------------------------------------------
+# Systematic variation files
+# ---------------------------------------------------------------------------
+systematic_files:
+  - file: "multifold_sherpa.h5"
+    variation_type: "generator"
+    description: >
+      OmniFold result using Sherpa as the alternative MC generator instead of
+      MG5. Treated as a generator modelling systematic uncertainty. Contains
+      326,430 events (different MC sample, different event count from nominal).
+    events: 326430
+    weight_columns: ["weight_mc", "weights_nominal", "weights_bootstrap_mc_0..24"]
+    shares_events_with_nominal: false
+
+  - file: "multifold_nonDY.h5"
+    variation_type: "composition"
+    description: >
+      OmniFold result with an alternative sample composition that includes
+      electroweak Zjj/VBF and diboson contributions in addition to DY Z+jets.
+      Treated as a background composition systematic uncertainty. Contains
+      433,397 events (expanded event set relative to nominal).
+    events: 433397
+    weight_columns: ["weight_mc", "weights_nominal"]
+    shares_events_with_nominal: false
+
+# ---------------------------------------------------------------------------
+# Normalization
+# ---------------------------------------------------------------------------
+normalization:
+  description: >
+    Weights are normalized such that the sum of weights_nominal gives the
+    expected number of events in the fiducial region for the full integrated
+    luminosity. This is a cross-section-weighted normalization, not a
+    probability density.
+  weights_nominal_sum_nominal: 1809.46
+  weights_mc_sum_nominal: 1701.13
+  unit: "events (cross-section weighted)"
+
+# ---------------------------------------------------------------------------
+# File manifest
+# ---------------------------------------------------------------------------
+files:
+  nominal: "multifold.h5"
+  sherpa: "multifold_sherpa.h5"
+  nonDY: "multifold_nonDY.h5"
+
+data_format:
+  container: "HDF5"
+  internal_format: "Pandas DataFrame (PyTables)"
+  hdf5_key: "df"
+  pandas_version: "0.15.2"
+  float_precision: "float32 (observables), mixed float32/float64 (weights)"
