@@ -135,7 +135,7 @@ See [`docs/design.md`](docs/design.md) for the full design document. Key choices
 ## Installation
 
 ```bash
-git clone https://github.com/shridharpanigrahi/omnifold-hepdata-evaluation.git
+git clone https://github.com/sridhar-panigrahi/omnifold-hepdata-evaluation.git
 cd omnifold-hepdata-evaluation
 pip install -r requirements.txt
 ```
