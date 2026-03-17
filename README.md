@@ -3,6 +3,8 @@
 **Author:** Shridhar Panigrahi
 **Context:** GSoC 2026 evaluation — OmniFold Publication Tools (CERN / HEP Software Foundation)
 
+**GSoC Proposal:** [PROPOSAL.md](PROPOSAL.md)
+
 ---
 
 ## Mentor Quick Walkthrough
